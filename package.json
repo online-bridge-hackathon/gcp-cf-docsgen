@@ -1,0 +1,21 @@
+{
+  "name": "gcp-cf-docsgen",
+  "version": "1.0.0",
+  "description": "GCP Cloud Function call method. Generates API documentation for a given spec (OpenApi-v3 or AsyncApi-v2)",
+  "main": "gcpfunction.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "shins": "^2.6.0",
+    "widdershins": "4.0.1",
+    "js-yaml": "3.14.0",
+    "oas-validator": "3.3.1",
+    "openapi-snippet": "0.9.0",
+    "asyncapi-validator": "2.4.4",
+    "openapi-to-postmanv2": "1.2.2",
+    "mustache": "4.0.1",
+    "@google-cloud/storage": "5.1.2"
+  }
+}
