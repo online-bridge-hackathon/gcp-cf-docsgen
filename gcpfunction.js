@@ -1,22 +1,29 @@
 'use strict'
 
-const loadSpec = require('./lib/loadSpec')
-const validateSpec = require('./lib/validateSpec')
-const writeDocs = require('./lib/writeDocs')
+const {saveFile, downloadFile} = require('./lib/gcpBucket')
+const parseSpec = require('./lib/parseSpec')
 const genDocs = require('./lib/genDocs')
+const genMain = require('./lib/genMain')
 
 /**
- * GCP Cloud Function call method. Generates API documentation for a given spec (OpenApi-v3 or AsyncApi-v2)
+ * GCP Cloud Function call method. Generates both the API documentation for a given spec (OpenApi-v3 or AsyncApi-v2) and the main page.
  *
- * @method
+ * @module init
  * @param {*} file
  * @param {*} context
  * @param {*} callback
  */
-exports.init = (file, context, callback) => Promise.resolve(file.name)
-  .then(loadSpec)
-  .then(validateSpec)
-  .then(genDocs)
-  .then(writeDocs)
+exports.init = (file, context, callback) => Promise.all(
+  [
+    // Generate docs for uploaded spec
+    Promise.resolve(file.name)
+      .then(downloadFile)
+      .then(parseSpec)
+      .then(genDocs),
+    // Generate main page
+    genMain()
+  ])
+  // Save/Create spec with main page
+  .then(resolved => Promise.all(resolved.flat().map(saveFile)))
   .catch(console.log)
   .finally(() => callback())
