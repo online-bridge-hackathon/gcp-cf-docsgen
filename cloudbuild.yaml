@@ -1,0 +1,10 @@
+steps:
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - functions
+  - deploy
+  - gcp-cf-docsgen
+  - --source=.
+  - --trigger-bucket=gcp-api
+  - --runtime=nodejs12
+  - --entry-point=init

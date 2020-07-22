@@ -1,0 +1,23 @@
+asyncapi: '2.0.0'
+info:
+  title: PlayEngine
+  version: '1.0.0'
+  x-logo:
+    url: "https://online-bridge-hackathon.github.io/data-formats/logo.png"
+    backgroundColor: "#FFFFFF"
+    altText: "OCR LOGO"  
+  description: |
+    Play Engine
+  license:
+    name: MIT
+servers:
+  mosquitto:
+    url: mqtt://test.mosquitto.org
+    protocol: mqtt
+channels:
+  hello:
+    subscribe:
+      message:
+        payload:
+          type: string
+          pattern: '^hello .+$'
