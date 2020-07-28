@@ -6,20 +6,38 @@ const genDocs = require('./lib/genDocs')
 const genMain = require('./lib/genMain')
 
 /**
- * GCP Cloud Function call method. 
+ * GCP Cloud Function onUpload.
  * Generates both the API documentation for a given spec (OpenApi-v3 or AsyncApi-v2) and the main page.
  *
- * @module init
- * @param {*} file
- * @param {*} context
- * @param {*} callback
+ * @module onUpload
+ * @param {Object} file [File object]{@ https://googleapis.dev/nodejs/storage/latest/Bucket.html#file} from GCP
+ * @param {Object} context
+ * @param {Function} callback Callback signal to GCP
  */
-exports.init = (file, context, callback) => Promise.resolve(file.name)
+exports.onUpload = (file, context, callback) => Promise.resolve(file.name)
   .then(gcpBucket.downloadFile)
   .then(parseSpec)
   // Generate docs for uploaded spec
   .then(genDocs)
   .then(docs => docs.map(gcpBucket.saveFile))
+  // Generate main page
+  .then(() => genMain())
+  .then(gcpBucket.saveFile)
+  .then(() => callback())
+
+/**
+ * GCP Cloud Function onDelete.
+ * Deletes the corresponding docs for the spec being deleted and updates the main page.
+ * @module onDelete
+ * @param {Object} file [File object]{@ https://googleapis.dev/nodejs/storage/latest/Bucket.html#file}
+ * @param {Object} context
+ * @param {Function} callback Callback signal to GCP
+ */
+exports.onDelete = (file, context, callback) => Promise.resolve(file.name)
+  .then(gcpBucket.downloadFile)
+  .then(parseSpec)
+  // Delete docs for spec being deleted
+  .then(spec => gcpBucket.deleteFiles(spec.info.title))
   // Generate main page
   .then(() => genMain())
   .then(gcpBucket.saveFile)

@@ -7,4 +7,4 @@ steps:
   - --source=.
   - --trigger-bucket=gcp-api
   - --runtime=nodejs12
-  - --entry-point=init
+  - --entry-point=onUpload

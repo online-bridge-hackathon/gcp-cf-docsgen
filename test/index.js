@@ -13,17 +13,19 @@ const sinon = require('sinon')
 const testOpenApi = fs.readFileSync(path.join(__dirname, './openapi.yaml'), 'utf-8')
 const testAsyncApi = fs.readFileSync(path.join(__dirname, './asyncapi.yaml'), 'utf-8')
 const gcpfunction = require('../gcpfunction.js')
-const gcpBucket = require('../lib/gcpBucket')
+const {Storage} = require('@google-cloud/storage')
 
-describe('GCP Cloud function flow test', function () {
-  let downloadBucketStub
-  let saveFileStub
-  let downloadFileStub
+describe('onUpload...', function () {
+  let getFilesStub
+  let fileStub
   beforeEach('initialize service stubs', function () {
     this.sandbox = sinon.createSandbox()
-    downloadBucketStub = this.sandbox.stub(gcpBucket, 'downloadBucket')
-    saveFileStub = this.sandbox.stub(gcpBucket, 'saveFile')
-    downloadFileStub = this.sandbox.stub(gcpBucket, 'downloadFile')
+    getFilesStub = this.sandbox.stub().resolves([['filetest']])
+    fileStub = this.sandbox.stub()
+    this.sandbox.stub(Storage.prototype, 'bucket').callsFake(() => ({
+      getFiles: getFilesStub,
+      file: fileStub
+    }))
   })
   afterEach('restore stub', function () {
     this.sandbox.restore()
@@ -31,38 +33,79 @@ describe('GCP Cloud function flow test', function () {
   describe('for an OpenApi Spec...', function () {
     describe('with a badly formed input...', function () {
       it('rejects', function () {
-        downloadBucketStub.resolves(['filetest'])
-        saveFileStub.resolves()
-        downloadFileStub.resolves('')
-        return expect(gcpfunction.init('test', '', () => console.log('finished'))).to.eventually.be.rejected
+        fileStub.returns({
+          download: sinon.stub().resolves(['']),
+          save: sinon.stub().resolves()
+        })
+        return expect(gcpfunction.onUpload('test', '', () => console.log('finished'))).to.eventually.be.rejected
       })
     })
     describe('with a well formed input...', function () {
       it('resolves', function () {
-        downloadBucketStub.resolves(['filetest'])
-        saveFileStub.resolves()
-        downloadFileStub.resolves(testOpenApi)
-        return expect(gcpfunction.init('test', '', () => console.log('finished'))).to.eventually.be.fulfilled
+        fileStub.returns({
+          download: sinon.stub().resolves([testOpenApi]),
+          save: sinon.stub().resolves()
+        })
+        return expect(gcpfunction.onUpload('test', '', () => console.log('finished'))).to.eventually.be.fulfilled
       })
     })
   })
   describe('for an AsyncApi Spec...', function () {
     describe('with a badly formed input...', function () {
       it('rejects', function () {
-        downloadBucketStub.resolves(['filetest'])
-        saveFileStub.resolves()
-        downloadFileStub.resolves('')
-        return expect(gcpfunction.init('test', '', () => console.log('finished'))).to.eventually.be.rejected
+        fileStub.returns({
+          download: sinon.stub().resolves(['']),
+          save: sinon.stub().resolves()
+        })
+        return expect(gcpfunction.onUpload('test', '', () => console.log('finished'))).to.eventually.be.rejected
       })
     })
     describe('with a well formed input...', function () {
       it('resolves', function () {
-        downloadBucketStub.resolves(['filetest'])
-        saveFileStub.resolves()
-        downloadFileStub.resolves(testAsyncApi)
-        return expect(gcpfunction.init('test', '', () => console.log('finished'))).to.eventually.be.fulfilled
+        fileStub.returns({
+          download: sinon.stub().resolves([testAsyncApi]),
+          save: sinon.stub().resolves()
+        })
+        return expect(gcpfunction.onUpload('test', '', () => console.log('finished'))).to.eventually.be.fulfilled
       })
     })
   })
+})
 
+describe('onDelete...', function () {
+  let deleteFileStub
+  let fileStub
+  let getFilesStub
+  beforeEach('initialize service stubs', function () {
+    this.sandbox = sinon.createSandbox()
+    fileStub = this.sandbox.stub()
+    deleteFileStub = this.sandbox.stub().resolves()
+    getFilesStub = this.sandbox.stub().resolves([['filetest']])
+    this.sandbox.stub(Storage.prototype, 'bucket').callsFake(() => ({
+      getFiles: getFilesStub,
+      deleteFiles: deleteFileStub,
+      file: fileStub
+    }))
+  })
+  afterEach('restore stub', function () {
+    this.sandbox.restore()
+  })
+  describe('for an OpenApi Spec...', function () {
+    it('invokes delete docs with the corresponding project folder name', function () {
+      fileStub.returns({
+        download: sinon.stub().resolves([testOpenApi]),
+        save: sinon.stub().resolves()
+      })
+      return expect(gcpfunction.onDelete('test', '', () => console.log('finished'))).to.eventually.be.fulfilled
+    })
+  })
+  describe('for an AsyncApi Spec...', function () {
+    it('invokes delete docs with the corresponding project folder name', function () {
+      fileStub.returns({
+        download: sinon.stub().resolves([testAsyncApi]),
+        save: sinon.stub().resolves()
+      })
+      return expect(gcpfunction.onDelete('test', '', () => console.log('finished'))).to.eventually.be.fulfilled
+    })
+  })
 })
