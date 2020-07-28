@@ -1,6 +1,11 @@
 # gcp-cf-docsgen
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM Version](https://img.shields.io/npm/v/npm.svg?style=flat)]()
+[![NPM License](https://img.shields.io/npm/l/all-contributors.svg?style=flat)](https://github.com/tterb/hyde/blob/master/LICENSE)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/online-bridge-hackathon/gcp-cf-docsgen/issues) 
 
-# [API Documentation Page](https://storage.cloud.google.com/gba-docs/index.html)
+
+## [API Documentation Page](https://storage.cloud.google.com/gba-docs/index.html)
 
 ## Overview
 
@@ -24,7 +29,7 @@ Currently supports [OpenApi V3](https://www.openapis.org/) for REST APIs and [As
 
 * * *
 
-## CI/CD
+## CD
 
 This project's master branch is hooked to gcp's cloud build, getting deployed every time there's a push to master. See cloudbuild.yaml for specifics.
 
@@ -44,7 +49,7 @@ This project's master branch is hooked to gcp's cloud build, getting deployed ev
 
 ## Tests
 
-The accessible entry point(init) is tested against well formed and badly formed spec inputs, with virtually 100% coverage (GCP's SDK wrapped aren't covered).
+The accessible entry points(onUpload and onDelete) are tested against well formed and badly formed spec inputs, with 100% coverage.
 
     npm run test
     npm run coverage
@@ -71,35 +76,84 @@ MIT
 
 ### Table of Contents
 
--   [init](#init)
+-   [onUpload](#onupload)
     -   [Parameters](#parameters)
--   [parseSpec](#parsespec)
+-   [onDelete](#ondelete)
     -   [Parameters](#parameters-1)
-    -   [saveFile](#savefile)
-        -   [Parameters](#parameters-2)
-    -   [downloadFile](#downloadfile)
-        -   [Parameters](#parameters-3)
-    -   [downloadBucket](#downloadbucket)
--   [genDocs](#gendocs)
+-   [saveFile](#savefile)
+    -   [Parameters](#parameters-2)
+-   [downloadFile](#downloadfile)
+    -   [Parameters](#parameters-3)
+-   [downloadBucket](#downloadbucket)
+-   [deleteFiles](#deletefiles)
     -   [Parameters](#parameters-4)
--   [widdershins](#widdershins)
+-   [parseSpec](#parsespec)
     -   [Parameters](#parameters-5)
--   [openapi2Snippet](#openapi2snippet)
+-   [genDocs](#gendocs)
     -   [Parameters](#parameters-6)
--   [shins](#shins)
+-   [widdershins](#widdershins)
     -   [Parameters](#parameters-7)
+-   [openapi2Snippet](#openapi2snippet)
+    -   [Parameters](#parameters-8)
+-   [shins](#shins)
+    -   [Parameters](#parameters-9)
 -   [genMain](#genmain)
 
-## init
+## onUpload
 
-GCP Cloud Function call method. 
+GCP Cloud Function onUpload.
 Generates both the API documentation for a given spec (OpenApi-v3 or AsyncApi-v2) and the main page.
 
 ### Parameters
 
--   `file` **any** 
--   `context` **any** 
--   `callback` **any** 
+-   `file` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** [File object]{@ <https://googleapis.dev/nodejs/storage/latest/Bucket.html#file}> from GCP
+-   `context` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `callback` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Callback signal to GCP
+
+## onDelete
+
+GCP Cloud Function onDelete.
+Deletes the corresponding docs for the spec being deleted and updates the main page.
+
+### Parameters
+
+-   `file` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** [File object]{@ <https://googleapis.dev/nodejs/storage/latest/Bucket.html#file}>
+-   `context` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `callback` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Callback signal to GCP
+
+## saveFile
+
+Saves/Uploads file to DOCS GCP Bucket - GCP Node SDK
+
+### Parameters
+
+-   `fileObject` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `fileObject.filePath` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+    -   `fileObject.data` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## downloadFile
+
+Downloads a file from API GCP Bucket - GCP Node SDK
+
+### Parameters
+
+-   `filePath` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** File content
+
+## downloadBucket
+
+Downloads a file link object from API GCP Bucket - GCP Node SDK
+
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)>** GCP Bucket file-link-object array
+
+## deleteFiles
+
+Deletes the project directory in the DOCS GCP Bucket - GCP Node SDK
+
+### Parameters
+
+-   `projectName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ## parseSpec
 
@@ -110,32 +164,6 @@ Parses and Validates an OpenApi v3 or AsyncApi v2 specification
 -   `spec` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** OpenApi v3 or AsyncApi v2
 
 Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** A validated spec
-
-### saveFile
-
-Saves/Uploads file to DOCS GCP Bucket - GCP Node SDK
-
-#### Parameters
-
--   `fileObject` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-    -   `fileObject.filePath` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-    -   `fileObject.data` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-### downloadFile
-
-Downloads a file from API GCP Bucket - GCP Node SDK
-
-#### Parameters
-
--   `filePath` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** File content
-
-### downloadBucket
-
-Downloads a file link object from API GCP Bucket - GCP Node SDK
-
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)>** GCP Bucket file-link-object array
 
 ## genDocs
 
