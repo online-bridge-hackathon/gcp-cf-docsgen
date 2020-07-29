@@ -1,9 +1,10 @@
 # gcp-cf-docsgen
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![NPM Version](https://img.shields.io/npm/v/npm.svg?style=flat)]()
-[![NPM License](https://img.shields.io/npm/l/all-contributors.svg?style=flat)](https://github.com/tterb/hyde/blob/master/LICENSE)
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/online-bridge-hackathon/gcp-cf-docsgen/issues) 
 
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![Inline docs](https://inch-ci.org/github/online-bridge-hackathon/gcp-cf-docsgen.svg?branch=master)](https://inch-ci.org/github/online-bridge-hackathon/gcp-cf-docsgen)
+[![NPM Version](https://img.shields.io/npm/v/npm.svg?style=flat)](<>)
+[![License](https://img.shields.io/npm/l/all-contributors.svg?style=flat)](https://github.com/online-bridge-hackathon/gcp-cf-docsgen/blob/master/LICENSE)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/online-bridge-hackathon/gcp-cf-docsgen/issues) 
 
 ## [API Documentation Page](https://storage.cloud.google.com/gba-docs/index.html)
 
@@ -80,15 +81,15 @@ MIT
     -   [Parameters](#parameters)
 -   [onDelete](#ondelete)
     -   [Parameters](#parameters-1)
--   [saveFile](#savefile)
-    -   [Parameters](#parameters-2)
--   [downloadFile](#downloadfile)
-    -   [Parameters](#parameters-3)
--   [downloadBucket](#downloadbucket)
--   [deleteFiles](#deletefiles)
-    -   [Parameters](#parameters-4)
 -   [parseSpec](#parsespec)
-    -   [Parameters](#parameters-5)
+    -   [Parameters](#parameters-2)
+    -   [saveFile](#savefile)
+        -   [Parameters](#parameters-3)
+    -   [downloadFile](#downloadfile)
+        -   [Parameters](#parameters-4)
+    -   [downloadBucket](#downloadbucket)
+    -   [deleteFiles](#deletefiles)
+        -   [Parameters](#parameters-5)
 -   [genDocs](#gendocs)
     -   [Parameters](#parameters-6)
 -   [widdershins](#widdershins)
@@ -97,6 +98,8 @@ MIT
     -   [Parameters](#parameters-8)
 -   [shins](#shins)
     -   [Parameters](#parameters-9)
+-   [openapi2postman](#openapi2postman)
+    -   [Parameters](#parameters-10)
 -   [genMain](#genmain)
 
 ## onUpload
@@ -121,49 +124,49 @@ Deletes the corresponding docs for the spec being deleted and updates the main p
 -   `context` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 -   `callback` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Callback signal to GCP
 
-## saveFile
-
-Saves/Uploads file to DOCS GCP Bucket - GCP Node SDK
-
-### Parameters
-
--   `fileObject` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-    -   `fileObject.filePath` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-    -   `fileObject.data` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-## downloadFile
-
-Downloads a file from API GCP Bucket - GCP Node SDK
-
-### Parameters
-
--   `filePath` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** File content
-
-## downloadBucket
-
-Downloads a file link object from API GCP Bucket - GCP Node SDK
-
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)>** GCP Bucket file-link-object array
-
-## deleteFiles
-
-Deletes the project directory in the DOCS GCP Bucket - GCP Node SDK
-
-### Parameters
-
--   `projectName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
 ## parseSpec
 
 Parses and Validates an OpenApi v3 or AsyncApi v2 specification
 
 ### Parameters
 
--   `spec` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** OpenApi v3 or AsyncApi v2
+-   `data` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** OpenApi v3 or AsyncApi v2
 
 Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** A validated spec
+
+### saveFile
+
+Saves/Uploads file to DOCS GCP Bucket - GCP Node SDK
+
+#### Parameters
+
+-   `fileObject` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `fileObject.filePath` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+    -   `fileObject.data` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### downloadFile
+
+Downloads a file from API GCP Bucket - GCP Node SDK
+
+#### Parameters
+
+-   `filePath` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** File content
+
+### downloadBucket
+
+Downloads a file link object from API GCP Bucket - GCP Node SDK
+
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)>** GCP Bucket file-link-object array
+
+### deleteFiles
+
+Deletes the project directory in the DOCS GCP Bucket - GCP Node SDK
+
+#### Parameters
+
+-   `projectName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ## genDocs
 
@@ -204,6 +207,14 @@ Converts a markdown string to slate format using shins
 -   `markdownString` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** HTML Shins page
+
+## openapi2postman
+
+Converts an OpenApi Spec to a Postman v2 collection and updates/syncs within globalbridge-app team space
+
+### Parameters
+
+-   `spec` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 ## genMain
 
