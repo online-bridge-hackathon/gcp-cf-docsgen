@@ -10,23 +10,24 @@
   },
   "license": "MIT",
   "dependencies": {
-    "shins": "^2.6.0",
+    "shins": "2.6.0",
     "widdershins": "4.0.1",
     "js-yaml": "3.14.0",
-    "oas-validator": "3.3.1",
+    "oas-validator": "4.0.6",
     "openapi-snippet": "0.9.0",
-    "asyncapi-validator": "2.4.4",
-    "openapi-to-postmanv2": "1.2.2",
+    "asyncapi-validator": "2.4.5",
+    "openapi-to-postmanv2": "1.2.5",
     "mustache": "4.0.1",
-    "@google-cloud/storage": "5.1.2"
+    "@google-cloud/storage": "5.1.2",
+    "axios": "0.19.2"
   },
   "devDependencies": {
     "documentation": "13.0.2",
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
-    "mocha": "6.2.2",
-    "nyc": "14.1.1",
-    "sinon": "7.5.0",
-    "sinon-chai": "3.3.0"
+    "mocha": "8.0.1",
+    "nyc": "15.1.0",
+    "sinon": "9.0.2",
+    "sinon-chai": "3.5.0"
   }
 }
