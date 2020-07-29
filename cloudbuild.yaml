@@ -5,7 +5,7 @@ steps:
     - deploy
     - gcp-cf-docsgen
     - --source=.
-    - --trigger-bucket=gcp-api
+    - --trigger-bucket=gba-api
     - --runtime=nodejs12
     - --entry-point=onUpload
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -14,6 +14,6 @@ steps:
     - deploy
     - gcp-cf-docsgen-ondelete
     - --source=.
-    - --trigger-bucket=gcp-api
+    - --trigger-bucket=gba-api
     - --runtime=nodejs12
     - --entry-point=onDelete
