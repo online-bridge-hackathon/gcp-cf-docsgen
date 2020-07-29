@@ -7,6 +7,7 @@ steps:
     - --source=.
     - --trigger-bucket=gba-apis
     - --runtime=nodejs12
+    - --region=europe-west1
     - --entry-point=onUpload
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
@@ -16,4 +17,5 @@ steps:
     - --source=.
     - --trigger-bucket=gba-apis
     - --runtime=nodejs12
+    - --region=europe-west1
     - --entry-point=onDelete
