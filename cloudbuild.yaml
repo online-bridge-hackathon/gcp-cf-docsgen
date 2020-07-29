@@ -1,10 +1,11 @@
 steps:
-- name: 'gcr.io/cloud-builders/gcloud'
-  args:
-  - functions
-  - deploy
-  - gcp-cf-docsgen
-  - --source=.
-  - --trigger-bucket=gcp-api
-  - --runtime=nodejs12
-  - --entry-point=onUpload
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+    - functions
+    - deploy
+    - gcp-cf-docsgen
+    - --source=.
+    - --trigger-bucket=gcp-api
+    - --runtime=nodejs12
+    - --set-env-vars POSTMAN_APIKEY=postmanApiKey
+    - --entry-point=onUpload

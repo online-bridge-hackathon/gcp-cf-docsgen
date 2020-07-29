@@ -14,12 +14,15 @@ const testOpenApi = fs.readFileSync(path.join(__dirname, './openapi.yaml'), 'utf
 const testAsyncApi = fs.readFileSync(path.join(__dirname, './asyncapi.yaml'), 'utf-8')
 const gcpfunction = require('../gcpfunction.js')
 const {Storage} = require('@google-cloud/storage')
+const axios = require('axios')
 
 describe('onUpload...', function () {
   let getFilesStub
   let fileStub
+  this.timeout(20000)
   beforeEach('initialize service stubs', function () {
     this.sandbox = sinon.createSandbox()
+    this.sandbox.stub(axios, 'put').resolves()
     getFilesStub = this.sandbox.stub().resolves([['filetest']])
     fileStub = this.sandbox.stub()
     this.sandbox.stub(Storage.prototype, 'bucket').callsFake(() => ({

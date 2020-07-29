@@ -1,5 +1,8 @@
 openapi: 3.0.2
 info:
+  x-postman:
+    uid: 269006-6e82d502-be44-46b7-878b-21dcfe617096
+    id: 6e82d502-be44-46b7-878b-21dcfe617096
   x-logo:
     url: "https://online-bridge-hackathon.github.io/data-formats/logo.png"
     backgroundColor: "#FFFFFF"
