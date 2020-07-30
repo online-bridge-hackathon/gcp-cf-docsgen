@@ -19,7 +19,7 @@ exports.onUpload = (file, context, callback) => Promise.resolve(file.name)
   .then(parseSpec)
   // Generate docs for uploaded spec
   .then(genDocs)
-  .then(docs => docs.map(gcpBucket.saveFile))
+  .then(docs => docs.flat().map(gcpBucket.saveFile))
   // Generate main page
   .then(() => genMain())
   .then(gcpBucket.saveFile)
@@ -27,17 +27,14 @@ exports.onUpload = (file, context, callback) => Promise.resolve(file.name)
 
 /**
  * GCP Cloud Function onDelete.
- * Deletes the corresponding docs for the spec being deleted and updates the main page.
+ * Updates the main page.
  * @module onDelete
  * @param {Object} file [File object]{@ https://googleapis.dev/nodejs/storage/latest/Bucket.html#file}
  * @param {Object} context
  * @param {Function} callback Callback signal to GCP
  */
 exports.onDelete = (file, context, callback) => Promise.resolve(file.name)
-  .then(gcpBucket.downloadFile)
-  .then(parseSpec)
-  // Delete docs for spec being deleted
-  .then(spec => gcpBucket.deleteFiles(spec.info.title))
+  .then(console.info)
   // Generate main page
   .then(() => genMain())
   .then(gcpBucket.saveFile)

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha",
     "coverage": "nyc mocha",
-    "docs": "documentation readme gcpfunction.js --section=Code-Documentation"
+    "docs": "documentation readme gcpfunction.js --section=Code-Documentation --shallow"
   },
   "license": "MIT",
   "dependencies": {
