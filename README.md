@@ -67,7 +67,7 @@ Generate docs for the [#Code-Documentation](#Code-Documentation) section of this
 
 ## License
 
-MIT
+[MIT](https://github.com/online-bridge-hackathon/gcp-cf-docsgen/blob/master/LICENSE)
 
 * * *
 
