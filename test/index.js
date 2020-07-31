@@ -19,6 +19,8 @@ const axios = require('axios')
 describe('onUpload...', function () {
   let getFilesStub
   let fileStub
+  const triggerInput = {name: 'test'}
+  const gcpCallback = () => console.log('Called gcp callback')
   this.timeout(20000)
   beforeEach('initialize service stubs', function () {
     this.sandbox = sinon.createSandbox()
@@ -40,7 +42,7 @@ describe('onUpload...', function () {
           download: sinon.stub().resolves(['']),
           save: sinon.stub().resolves()
         })
-        return expect(gcpfunction.onUpload('test', '', () => console.log('finished'))).to.eventually.be.rejected
+        return expect(gcpfunction.onUpload(triggerInput, '', gcpCallback)).to.eventually.be.rejected
       })
     })
     describe('with a well formed input...', function () {
@@ -49,7 +51,7 @@ describe('onUpload...', function () {
           download: sinon.stub().resolves([testOpenApi]),
           save: sinon.stub().resolves()
         })
-        return expect(gcpfunction.onUpload('test', '', () => console.log('finished'))).to.eventually.be.fulfilled
+        return expect(gcpfunction.onUpload(triggerInput, '', gcpCallback)).to.eventually.be.fulfilled
       })
     })
   })
@@ -60,7 +62,7 @@ describe('onUpload...', function () {
           download: sinon.stub().resolves(['']),
           save: sinon.stub().resolves()
         })
-        return expect(gcpfunction.onUpload('test', '', () => console.log('finished'))).to.eventually.be.rejected
+        return expect(gcpfunction.onUpload(triggerInput, '', gcpCallback)).to.eventually.be.rejected
       })
     })
     describe('with a well formed input...', function () {
@@ -69,7 +71,7 @@ describe('onUpload...', function () {
           download: sinon.stub().resolves([testAsyncApi]),
           save: sinon.stub().resolves()
         })
-        return expect(gcpfunction.onUpload('test', '', () => console.log('finished'))).to.eventually.be.fulfilled
+        return expect(gcpfunction.onUpload(triggerInput, '', gcpCallback)).to.eventually.be.fulfilled
       })
     })
   })
@@ -79,6 +81,8 @@ describe('onDelete...', function () {
   let deleteFileStub
   let fileStub
   let getFilesStub
+  const triggerInput = {name: 'test'}
+  const gcpCallback = () => console.log('Called gcp callback')
   beforeEach('initialize service stubs', function () {
     this.sandbox = sinon.createSandbox()
     fileStub = this.sandbox.stub()
@@ -99,7 +103,7 @@ describe('onDelete...', function () {
         download: sinon.stub().resolves([testOpenApi]),
         save: sinon.stub().resolves()
       })
-      return expect(gcpfunction.onDelete('test', '', () => console.log('finished'))).to.eventually.be.fulfilled
+      return expect(gcpfunction.onDelete(triggerInput, '', gcpCallback)).to.eventually.be.fulfilled
     })
   })
   describe('for an AsyncApi Spec...', function () {
@@ -108,7 +112,7 @@ describe('onDelete...', function () {
         download: sinon.stub().resolves([testAsyncApi]),
         save: sinon.stub().resolves()
       })
-      return expect(gcpfunction.onDelete('test', '', () => console.log('finished'))).to.eventually.be.fulfilled
+      return expect(gcpfunction.onDelete(triggerInput, '', gcpCallback)).to.eventually.be.fulfilled
     })
   })
 })

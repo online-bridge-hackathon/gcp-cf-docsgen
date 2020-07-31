@@ -1,4 +1,10 @@
 steps:
+  - name: 'node'
+    entrypoint: 'npm'
+    args: ['install']
+  - name: 'node'
+    entrypoint: 'npm'
+    args: ['run', 'coverage']
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
     - functions
@@ -6,6 +12,7 @@ steps:
     - gcp-cf-docsgen
     - --source=.
     - --trigger-bucket=gba-apis
+    - --trigger-event=google.storage.object.finalize
     - --runtime=nodejs12
     - --region=europe-west1
     - --entry-point=onUpload
@@ -16,6 +23,7 @@ steps:
     - gcp-cf-docsgen-ondelete
     - --source=.
     - --trigger-bucket=gba-apis
+    - --trigger-event=google.storage.object.delete
     - --runtime=nodejs12
     - --region=europe-west1
     - --entry-point=onDelete
