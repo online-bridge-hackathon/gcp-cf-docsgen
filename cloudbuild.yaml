@@ -1,4 +1,10 @@
 steps:
+  - name: 'node'
+    entrypoint: 'npm'
+    args: ['install']
+  - name: 'node'
+    entrypoint: 'npm'
+    args: ['run', 'coverage']
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
     - functions
