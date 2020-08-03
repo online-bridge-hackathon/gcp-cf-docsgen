@@ -9,7 +9,7 @@ steps:
     args:
     - functions
     - deploy
-    - gcp-cf-docsgen
+    - gba-apis-onUpload
     - --source=.
     - --trigger-bucket=gba-apis
     - --runtime=nodejs12
@@ -19,7 +19,7 @@ steps:
     args:
     - functions
     - deploy
-    - gcp-cf-docsgen-ondelete
+    - gba-apis-onDelete
     - --source=.
     - --trigger-resource=gba-apis
     - --trigger-event=google.storage.object.delete
