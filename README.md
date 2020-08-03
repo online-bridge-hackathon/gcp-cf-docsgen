@@ -12,7 +12,7 @@
 
 GCP Cloud Function to generate and update documentation for the different projects of [Global Bridge App](https://github.com/online-bridge-hackathon/bridge-hackathon).
 
-Triggered when a new/updated spec is uploaded to Global Bridge App's [gba-api bucket](https://storage.cloud.google.com/gba-api). Output documentation is uploaded to the [gba-docs bucket](https://storage.cloud.google.com/gba-docs).
+Triggered when a new/updated spec is uploaded to Global Bridge App's [gba-apis bucket](https://storage.cloud.google.com/gba-apis). Output documentation is uploaded to the [gba-docs bucket](https://storage.cloud.google.com/gba-docs).
 
 A main HomePage is also rendered based on the specs currently active @gba-docs using a simple mustache template. See /templates/readme.html.md.mustache
 
