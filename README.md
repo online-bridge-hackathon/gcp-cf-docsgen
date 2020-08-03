@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/npm/l/all-contributors.svg?style=flat)](https://github.com/online-bridge-hackathon/gcp-cf-docsgen/blob/master/LICENSE)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/online-bridge-hackathon/gcp-cf-docsgen/issues) 
 
-## [API Documentation Page](https://storage.cloud.google.com/gba-docs/index.html)
+## [API Documentation Page](https://storage.googleapis.com/gba-docs/index.html)
 
 ## Overview
 
