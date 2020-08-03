@@ -2,7 +2,7 @@
 
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![Inline docs](https://inch-ci.org/github/online-bridge-hackathon/gcp-cf-docsgen.svg?branch=master)](https://inch-ci.org/github/online-bridge-hackathon/gcp-cf-docsgen)
-[![NPM Version](https://img.shields.io/npm/v/npm.svg?style=flat)](<>)
+[![NPM Version](https://img.shields.io/npm/v/npm.svg?style=flat)](https://www.npmjs.com/)
 [![License](https://img.shields.io/npm/l/all-contributors.svg?style=flat)](https://github.com/online-bridge-hackathon/gcp-cf-docsgen/blob/master/LICENSE)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/online-bridge-hackathon/gcp-cf-docsgen/issues) 
 
@@ -22,17 +22,23 @@ Currently supports [OpenApi V3](https://www.openapis.org/) for REST APIs and [As
 
 ## Current features
 
--   Renders a Main HomePage based on the current uploaded spec @gba-docs
--   Renders a slate/shin markdown page with code samples for each project
--   Renders an HTML page with code samples for each project
--   Auto links to a swagger/asyncapi playground with live "try-out"
--   Postman collections linkage
+-   Renders a Main HomePage using [Widdershins](https://github.com/Mermade/widdershins#readme) based on the current uploaded specs @[gba-apis](https://storage.cloud.google.com/gba-apis)
+-   Renders a slate/shin markdown page with code samples for each project using [Widdershins](https://github.com/Mermade/widdershins#readme) and [Shins](https://github.com/Mermade/shins#readme)
+-   Renders an HTML page with code samples for each project using [Redoc](https://github.com/Redocly/redoc#readme) and [AsyncDoc](https://github.com/jfveronelli/instant-asyncapi-doc)
+-   Auto links to a [Swagger](https://editor.swagger.io/)/[Asyncapi](https://playground.asyncapi.io/) playground with live "try-out"
+-   [Postman](https://explore.postman.com/globalbridge-app) collections linkage
 
 * * *
 
 ## CD
 
-This project's master branch is hooked to gcp's cloud build, getting deployed every time there's a push to master. See cloudbuild.yaml for specifics.
+This project's master branch is hooked to gcp's [Cloud Build](https://cloud.google.com/cloud-build). 
+
+Deploys onUpdate and onDelete entry points as cloud functions.
+
+Coverage([nyc](https://www.npmjs.com/package/nyc)) thresholds are currently set to 100%.
+
+See cloudbuild.yaml for specifics.
 
 * * *
 
@@ -40,7 +46,21 @@ This project's master branch is hooked to gcp's cloud build, getting deployed ev
 
 ### - REQUIREMENTS
 
-    NodeJS (v12+)
+* [NodeJS](https://nodejs.org/en/) (v12+)
+
+### - ENVIRONMENT VARIABLES
+
+The following environment variables *must* be set either at the cloud environment or using .env or something simillar. They are not required for testing purposes.
+
+* API_BUCKET - gcp APIs bucket name
+
+* DOCS_BUCKET - gcp DOCS output bucket name
+
+The following environment variables *may* be set either at the cloud environment or using .env or something simillar. They are not required for testing purposes.
+
+If ommited, the Postman collection will not be updated.
+
+* POSTMAN_APIKEY - Postman API Key for updating collections. See https://explore.postman.com/globalbridge-app
 
 ### - PACKAGES
 
@@ -50,7 +70,7 @@ This project's master branch is hooked to gcp's cloud build, getting deployed ev
 
 ## Tests
 
-The accessible entry points(onUpload and onDelete) are tested against well formed and badly formed spec inputs, with 100% coverage.
+The accessible entry points(onUpload and onDelete) are tested against well formed and badly formed spec inputs.
 
     npm run test
     npm run coverage
