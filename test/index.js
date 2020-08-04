@@ -12,7 +12,7 @@ const expect = chai.expect
 const sinon = require('sinon')
 const testOpenApi = fs.readFileSync(path.join(__dirname, './openapi.yaml'), 'utf-8')
 const testAsyncApi = fs.readFileSync(path.join(__dirname, './asyncapi.yaml'), 'utf-8')
-const gcpfunction = require('../gcpfunction.js')
+const gcpfunction = require('../lib/gcpFunction/index.js')
 const {Storage} = require('@google-cloud/storage')
 const axios = require('axios')
 
