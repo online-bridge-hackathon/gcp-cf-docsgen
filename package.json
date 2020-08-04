@@ -2,11 +2,12 @@
   "name": "gcp-cf-docsgen",
   "version": "1.0.0",
   "description": "GCP Cloud Function call method. Generates API documentation for a given spec (OpenApi-v3 or AsyncApi-v2)",
-  "main": "gcpfunction.js",
+  "main": "lib/gcpFunction/index.js",
   "scripts": {
     "test": "mocha",
     "coverage": "nyc mocha",
-    "docs": "documentation readme gcpfunction.js --section=Code-Documentation --shallow"
+    "docs": "documentation readme gcpfunction.js --section=Code-Documentation --shallow",
+    "renderAll": "node lib/renderAll/index.js"
   },
   "license": "MIT",
   "dependencies": {
