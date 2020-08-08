@@ -33,10 +33,10 @@ describe('GCP Cloud Functions Tests', function () {
   let fileStub
   let getFilesStub
   const gcpCallback = () => console.log('Called gcp callback')
-  const originalLogFunction = console.log
-  const originalLogInfoFunction = console.info
-  const originalLogErrorFunction = console.error
   let consoleOutput = ''
+  const consoleStubFunction = msg => {
+    consoleOutput += msg + '\n'
+  }
   describe('onUpload...', function () {
     this.timeout(20000)
     beforeEach('initialize service stubs', function () {
@@ -48,21 +48,12 @@ describe('GCP Cloud Functions Tests', function () {
         getFiles: getFilesStub,
         file: fileStub
       }))
-      console.log = msg => {
-        consoleOutput += msg + '\n'
-      }
-      console.info = msg => {
-        consoleOutput += msg + '\n'
-      }
-      console.error = msg => {
-        consoleOutput += msg + '\n'
-      }
+      this.sandbox.stub(console, 'log').callsFake(consoleStubFunction)
+      this.sandbox.stub(console, 'info').callsFake(consoleStubFunction)
+      this.sandbox.stub(console, 'error').callsFake(consoleStubFunction)
     })
     afterEach('restore stub', function () {
       this.sandbox.restore()
-      console.log = originalLogFunction
-      console.info = originalLogInfoFunction
-      console.error = originalLogErrorFunction
       if (this.currentTest.state === 'failed') {
         console.log(consoleOutput)
       }
@@ -138,21 +129,12 @@ describe('GCP Cloud Functions Tests', function () {
         deleteFiles: deleteFileStub,
         file: fileStub
       }))
-      console.log = msg => {
-        consoleOutput += msg + '\n'
-      }
-      console.info = msg => {
-        consoleOutput += msg + '\n'
-      }
-      console.error = msg => {
-        consoleOutput += msg + '\n'
-      }
+      this.sandbox.stub(console, 'log').callsFake(consoleStubFunction)
+      this.sandbox.stub(console, 'info').callsFake(consoleStubFunction)
+      this.sandbox.stub(console, 'error').callsFake(consoleStubFunction)
     })
     afterEach('restore stub', function () {
       this.sandbox.restore()
-      console.log = originalLogFunction
-      console.info = originalLogInfoFunction
-      console.error = originalLogErrorFunction
       if (this.currentTest.state === 'failed') {
         console.log(consoleOutput)
       }
