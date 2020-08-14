@@ -30,7 +30,7 @@ Currently supports [OpenApi V3](https://www.openapis.org/) for REST APIs and [As
 
 * * *
 
-## CD
+## CD/CI
 
 This project's master branch is hooked to gcp's [Cloud Build](https://cloud.google.com/cloud-build). 
 
@@ -46,25 +46,31 @@ See cloudbuild.yaml for specifics.
 
 ### - REQUIREMENTS
 
-* [NodeJS](https://nodejs.org/en/) (v12+)
+-   [NodeJS](https://nodejs.org/en/) (v12+)
 
 ### - ENVIRONMENT VARIABLES
 
-The following environment variables *must* be set either at the cloud environment or using .env or something simillar. They are not required for testing purposes.
+The following environment variables _must_ be set either at the cloud environment or using .env or something simillar. They are not required for testing purposes.
 
-* API_BUCKET - gcp APIs bucket name
+-   API_BUCKET - gcp APIs bucket name
 
-* DOCS_BUCKET - gcp DOCS output bucket name
+-   DOCS_BUCKET - gcp DOCS output bucket name
 
-The following environment variables *may* be set either at the cloud environment or using .env or something simillar. They are not required for testing purposes.
+The following environment variables _may_ be set either at the cloud environment or using .env or something simillar. They are not required for testing purposes.
 
 If ommited, the Postman collection will not be updated.
 
-* POSTMAN_APIKEY - Postman API Key for updating collections. See https://explore.postman.com/globalbridge-app
+-   POSTMAN_APIKEY - Postman API Key for updating collections. See <https://explore.postman.com/globalbridge-app>
 
 ### - PACKAGES
 
     npm install
+
+* * *
+
+## Usage
+
+Upload or Delete a spec to Global Bridge App's Api Bucket: <https://storage.cloud.google.com/gba-apis>
 
 * * *
 
